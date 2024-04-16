@@ -1,4 +1,4 @@
-module concordia.ca/jeremy.frandon/md_to_docx_document
+module github.com/CIISE2022/markdown2docx
 
 go 1.22.1
 
