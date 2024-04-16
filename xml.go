@@ -364,6 +364,20 @@ func (r *myRenderer) renderImage(w util.BufWriter, source []byte, node ast.Node,
 	anchored.SetTextWrapTopAndBottom()
 	anchored.SetHAlignment(wml.WdST_AlignHCenter)
 	anchored.SetOrigin(wml.WdST_RelFromH(wml.WdST_AlignHCenter), wml.WdST_RelFromVLine)
+	width := img1.Size.X
+	height := img1.Size.Y
+	if width > 5*72 {
+		nwidth := 5 * 72 * measurement.Pixel72
+		nheight := nwidth * float64(height) / float64(width)
+		anchored.SetSize(measurement.Distance(nwidth), measurement.Distance(nheight))
+	}
+	caption := r.doc.AddParagraph()
+	caption.SetStyle("Caption")
+	run := caption.AddRun()
+	run.AddText("Figure ")
+	run.AddField("SEQ Figure")
+	run.AddText(". " + string(n.Title))
+
 	return ast.WalkSkipChildren, nil
 }
 
